@@ -1,16 +1,10 @@
 all: timestamp.elf create-file.elf
 
-timestamp.elf: timestamp.o
-	gcc $(CFLAGS) -o timestamp.elf timestamp.o
+%.elf: %.o
+	gcc $(CFLAGS) -o $@ $<
 
-timestamp.o: timestamp.c
-	gcc $(CFLAGS) -c timestamp.c
-
-create-file.elf: create-file.o
-	gcc $(CFLAGS) -o create-file.elf create-file.o
-
-create-file.o: create-file.c
-	gcc $(CFLAGS) -c create-file.c
+%.o: %.c
+	gcc $(CFLAGS) -c $<
 
 clean:
 	rm -f *.o *.elf *.txt

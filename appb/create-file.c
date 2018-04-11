@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 {
     /* The path at which to create a new file. */
     char *path = argv[1];
-    /* The permissions of the new file. */
+    /* The permissions of the new file (rw-rw-r--). */
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
     /* Create the file. */

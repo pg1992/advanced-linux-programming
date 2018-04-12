@@ -1,4 +1,7 @@
-all: timestamp.elf create-file.elf hexdump.elf lseek-huge.elf read-file.elf
+TARGETS=timestamp.elf create-file.elf hexdump.elf lseek-huge.elf read-file.elf\
+		write-all.elf
+
+all: $(TARGETS)
 
 %.elf: %.o
 	gcc $(CFLAGS) -o $@ $<

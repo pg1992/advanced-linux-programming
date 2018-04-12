@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -28,5 +29,14 @@ char *read_file(const char *filename, size_t *length)
 
 int main(int argc, char **argv)
 {
+    char *filename = argv[1];
+    size_t length;
+    char *buffer = read_file(filename, &length);
+
+    printf("Size of %s: %d B\n", filename, length);
+    printf("File contents:\n\n%s\n", buffer);
+
+    free(buffer);
+
     return 0;
 }

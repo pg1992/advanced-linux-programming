@@ -1,4 +1,4 @@
-all: timestamp.elf create-file.elf hexdump.elf lseek-huge.elf
+all: timestamp.elf create-file.elf hexdump.elf lseek-huge.elf read-file.elf
 
 %.elf: %.o
 	gcc $(CFLAGS) -o $@ $<

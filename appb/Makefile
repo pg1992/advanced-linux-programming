@@ -1,4 +1,4 @@
-all: timestamp.elf create-file.elf
+all: timestamp.elf create-file.elf hexdump.elf
 
 %.elf: %.o
 	gcc $(CFLAGS) -o $@ $<

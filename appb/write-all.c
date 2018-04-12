@@ -10,11 +10,12 @@
 ssize_t write_all(int fd, const void *buffer, size_t count) {
     size_t left_to_write = count;
     while (left_to_write > 0) {
-        size_t written = write(fd, buffer, count);
+        size_t written = write(fd, buffer, left_to_write);
         if (written == -1) {
             return -1;
         } else {
             left_to_write -= written;
+            buffer += written;
         }
     }
     assert(left_to_write == 0);

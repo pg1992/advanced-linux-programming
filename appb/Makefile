@@ -10,4 +10,4 @@ all: $(TARGETS)
 	gcc $(CFLAGS) -c $<
 
 clean:
-	rm -f *.o *.elf *.txt
+	rm -rf *.o *.elf *.txt *.d

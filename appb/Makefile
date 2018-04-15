@@ -1,5 +1,5 @@
 TARGETS=timestamp.elf create-file.elf hexdump.elf lseek-huge.elf read-file.elf\
-		write-all.elf write-args.elf gnu-c.elf
+		write-all.elf write-args.elf gnu-c.elf make-directory.elf
 
 all: $(TARGETS)
 

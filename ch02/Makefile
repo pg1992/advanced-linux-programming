@@ -2,7 +2,7 @@ CC=gcc
 
 .PHONY: clean all
 
-all: arglist.elf
+all: arglist.elf getopt_long.elf
 
 %.elf: %.o
 	$(CC) $(CFLAGS) -o $@ $<

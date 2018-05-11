@@ -2,7 +2,7 @@ CC=gcc
 
 .PHONY: clean all
 
-all: arglist.elf getopt_long.elf stdio.elf buffer.elf print-env.elf
+all: arglist.elf getopt_long.elf stdio.elf buffer.elf print-env.elf client.elf
 
 %.elf: %.o
 	$(CC) $(CFLAGS) -o $@ $<

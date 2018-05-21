@@ -4,7 +4,10 @@ CC=gcc
 
 all: arglist.elf getopt_long.elf stdio.elf buffer.elf print-env.elf client.elf\
 	temp_file.elf tmpfile.elf error_handling.elf readfile.elf app-static.elf\
-	app-dynamic.elf
+	app-dynamic.elf tifftest.elf
+
+tifftest.elf: tifftest.o
+	$(CC) $(CFLAGS) -ltiff -o $@ $<
 
 app-static.elf: app.o libtest.a
 	$(CC) $(CFLAGS) -static app.o -L. -ltest -o $@

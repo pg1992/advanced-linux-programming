@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 /*
  * Spawn a child process running a new program.  PROGRAM is the name
@@ -31,6 +32,8 @@ int spawn(char *command, char **arg_list)
 
 int main(void)
 {
+    int child_status;
+
     /* The argument list to pass to the "ls" command. */
     char *arg_list[] = {
         "ls", /* argv[0], the name of the program. */
@@ -43,7 +46,13 @@ int main(void)
      * returned child process ID. */
     spawn("ls", arg_list);
 
-    printf("done with main program\n");
+    /* Wait for the child process to complete. */
+    wait(&child_status);
+    if (WIFEXITED(child_status))
+        printf("the child process exited normally, with exit code %d\n",
+                WEXITSTATUS(child_status));
+    else
+        printf("the child process exited abnormally\n");
 
     return 0;
 }

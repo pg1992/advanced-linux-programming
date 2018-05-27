@@ -43,7 +43,8 @@ int main(void)
     pthread_create(&thread, NULL, &compute_prime, (void*) &which_prime);
     /* Do some other work here... */
     /* Wait for the prime number thread to complete, and get the result. */
-    pthread_join(thread, (void*) &prime);
+    if (!pthread_equal(pthread_self(), thread))
+        pthread_join(thread, (void*) &prime);
 
     /* Print the largest prime number it computed. */
     printf("The %dth prime number is %d,\n", which_prime, prime);

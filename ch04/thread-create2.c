@@ -43,5 +43,11 @@ int main(void)
     thread2_args.count = 20000;
     pthread_create(&thread2_id, NULL, &char_print, &thread2_args);
 
+    /* Make sure the first thread has finished. */
+    pthread_join(thread1_id, NULL);
+    /* Make sure the second thread has finished. */
+    pthread_join(thread2_id, NULL);
+
+    /* Now we can safely return. */
     return 0;
 }

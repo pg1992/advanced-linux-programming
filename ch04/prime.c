@@ -3,8 +3,8 @@
 
 void* compute_prime(void* arg)
 {
-    int candidate = 2;
-    int n = *((int*) arg);
+    long candidate = 2;
+    long n = *((long*) arg);
 
     while (1) {
         int factor;
@@ -29,8 +29,8 @@ void* compute_prime(void* arg)
 int main(void)
 {
     pthread_t thread;
-    int which_prime = 5000;
-    int prime;
+    long which_prime = 5000;
+    long prime;
 
     pthread_create(&thread, NULL, &compute_prime, (void*) &which_prime);
     pthread_join(thread, (void*) &prime);

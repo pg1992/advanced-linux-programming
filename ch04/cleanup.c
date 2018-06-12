@@ -24,7 +24,7 @@ void* do_some_work(void* args)
     void* temp_buffer = allocate_buffer(1024);
     printf("Pushing cleanup handler.\n");
     /* Register a cleanup handler for this buffer, to deallocate it in
-     * case the thread exits of is cancelled. */
+     * case the thread exits or is cancelled. */
     pthread_cleanup_push(deallocate_buffer, temp_buffer);
     printf("Sleeping for 5 s.\n");
     sleep(5);

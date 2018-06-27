@@ -16,6 +16,8 @@ struct job {
 struct job* job_queue;
 /* An array that stores the result calculated by each thread. */
 long accum[NUM_THREADS];
+/* A mutex protecting job_queue. */
+pthread_mutex_t job_queue_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* Process queued jobs until the queue is empty. */
 void process_job(struct job* current_job, long tid)
@@ -29,11 +31,18 @@ void* thread_function(void* arg)
     /* The main thread assing each thread with a simple thread number. */
     long tid = (long) arg;
 
-    while (job_queue != NULL) {
+    while (1) {
+        struct job* next_job;
         /* Get the next available job. */
-        struct job* next_job = job_queue;
-        /* Remove this job from the list. */
-        job_queue = job_queue->next;
+        pthread_mutex_lock(&job_queue_mutex);
+        if (job_queue == NULL)
+            next_job = NULL;
+        else {
+            next_job = job_queue;
+            job_queue = job_queue->next;
+        }
+        pthread_mutex_unlock(&job_queue_mutex);
+        if (!next_job) break;
         /* Carry out the work. */
         process_job(next_job, tid);
         /* Clean up. */

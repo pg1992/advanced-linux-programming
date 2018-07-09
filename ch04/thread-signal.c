@@ -4,6 +4,7 @@
 #include <signal.h>
 #include <pthread.h>
 
+/* The thread ID of the main thread (saved on main). */
 static pthread_t main_thread;
 
 static void handler(int signum)
@@ -11,25 +12,32 @@ static void handler(int signum)
     pthread_t caller_id = pthread_self();
     /* Prints the ID of the thread which received SIGINT (^C). */
     fprintf(stderr,"thread %li received SIGINT\n", (long) caller_id);
+    /* If the main thread received the signal it */
     if (pthread_equal(caller_id, main_thread)) {
         fprintf(stderr,"main thread closing the whole thing\n");
         fprintf(stderr,"\t\t\t\t\tthe motherf&$@ing user killed me :(\n");
         fprintf(stderr,"\t\t\t\t\tbut i'll bring everyone down with me >:D\n");
+        /* Kill the whole process. */
         exit(0);
     }
     fprintf(stderr,"\t\t\t\t\tyou shot me down (bang, bang)\n");
     fprintf(stderr,"\t\t\t\t\ti hit the ground (bang, bang)\n");
+    /* Exit the thread if since it is not the main thread. */
     pthread_exit(0);
 }
 
 void *thread_function(void *arg)
 {
     pthread_t other = (pthread_t) arg;
+    /* Kill the other thread if this thread received an argument instead of
+     * NULL. */
     if (other) {
         fprintf(stderr,"the other thread ID is %ld\n", (long) other);
         fprintf(stderr,"\t\t\t\t\ti'll kill it in 5 secs\n");
+        /* Wait for 5s before killing the other thread. */
         sleep(5);
         fprintf(stderr,"\t\t\t\t\tI'LL KILL YOUUUU!!!\n");
+        /* Send a SIGINT signal to the other thread. */
         pthread_kill(other, SIGINT);
     }
     /* Announce that the thread has begun and show its ID. */
